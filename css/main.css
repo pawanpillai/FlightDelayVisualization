@@ -93,3 +93,16 @@ footer {
 .left-divider {
     border-left: 1px solid #ccc;
 }
+
+.tooltip {
+    left: 378px;
+    top: 904px;
+    background-color: #ccc;
+    padding: 2px;
+    border-radius: 5px;
+    font-weight: bold;
+}
+
+/* .bootstrap-select{
+    width: 500px !important;
+} */

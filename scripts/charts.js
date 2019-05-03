@@ -7,7 +7,7 @@ class SvgChart {
     }
 }
 
-class BarChart extends SvgChart{
+class BarChart extends SvgChart {
     constructor(data, svg) {
         super(data, svg);
         this._minY = 0;
@@ -24,7 +24,7 @@ class BarChart extends SvgChart{
 
         const width = Number(svg.attr('width'));
         const height = Number(svg.attr('height'));
-        const margin = ({top: 20, right: 0, bottom: 30, left: 50});
+        const margin = ({ top: 20, right: 0, bottom: 30, left: 50 });
 
         const x = d3.scaleBand()
             .domain(data.map(d => d.name))
@@ -45,7 +45,11 @@ class BarChart extends SvgChart{
             .call(d3.axisLeft(y).tickSize(-width, 0, 0))
             .call(g => g.select(".domain").remove());
 
-    
+        // Define the div for the tooltip
+        let tooltilDiv = d3.select("body").append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
         svg.append('g')
             .attr('fill', blueColor)
             .selectAll('rect')
@@ -53,7 +57,20 @@ class BarChart extends SvgChart{
             .attr('x', d => x(d.name))
             .attr('y', d => y(d.value))
             .attr('height', d => y(this._minY) - y(d.value))
-            .attr('width', x.bandwidth());
+            .attr('width', x.bandwidth())
+            .on("mouseover", function (d) {
+                tooltilDiv.transition()
+                    .duration(200)
+                    .style("opacity", .9);
+                tooltilDiv.html("Total Flights: " + d.value)
+                    .style("left", (d3.event.pageX) + "px")
+                    .style("top", (d3.event.pageY - 28) + "px");
+            })
+            .on("mouseout", function (d) {
+                tooltilDiv.transition()
+                    .duration(500)
+                    .style("opacity", 0);
+            });;
 
         svg.append('g')
             .attr("class", "axis")
@@ -65,7 +82,7 @@ class BarChart extends SvgChart{
     }
 }
 
-class DatesLineChart extends SvgChart{
+class DatesLineChart extends SvgChart {
 
 
     constructor(data, svg) {
@@ -84,7 +101,7 @@ class DatesLineChart extends SvgChart{
 
         const width = Number(svg.attr('width'));
         const height = Number(svg.attr('height'));
-        const margin = ({top: 20, right: 0, bottom: 30, left: 40});
+        const margin = ({ top: 20, right: 0, bottom: 30, left: 40 });
 
         const x = d3.scaleTime()
             .domain(d3.extent(data, d => d.date))
@@ -97,7 +114,7 @@ class DatesLineChart extends SvgChart{
         const xAxis = g => g
             .attr("transform", `translate(0,${height - margin.bottom})`)
             .call(d3.axisBottom(x)
-            .ticks(width / 100).tickSizeOuter(0));
+                .ticks(width / 100).tickSizeOuter(0));
 
         const yAxis = g => g
             .attr('transform', `translate(${margin.left},0)`)
@@ -136,7 +153,7 @@ class DatesLineChart extends SvgChart{
             .attr("width", 210)
             .attr("height", 70)
             .attr("ry", 10);
-            
+
         tooltipLines.forEach((line, i) => {
             tooltip.append("text")
                 .attr("data-line", i)
@@ -192,7 +209,7 @@ class DatesLineChart extends SvgChart{
     }
 }
 
-class PieChart extends SvgChart{
+class PieChart extends SvgChart {
     constructor(data, svg) {
         super(data, svg);
         this._colors = d3.schemeCategory10;
