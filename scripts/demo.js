@@ -58,7 +58,7 @@ async function makeDelaysMap() {
 
         const point = [Number(airport.latitude), Number(airport.longitude)];
 
-        console.log(it.delay_rate, sizeScaler(it.delay_rate) * 200000);
+        //console.log(it.delay_rate, sizeScaler(it.delay_rate) * 200000);
 
         const circle = L.circle(point, {
             fillColor: 'red',
@@ -76,14 +76,15 @@ async function makeDelaysMap() {
 }
 
 async function makeAirlinesDelaysPlot() {
+
     const data = (await d3.json('data/airlines_delays.json'))
-        .map(it => ({ name: it.airline, value: it.delay_rate * 100, size: it.flights_count }));
+        .map(it => ({ name: it.airline_name, value: it.delay_rate * 100, size: it.flights_count}));
 
     const svg = d3.select('#airlinesDelaysPlot');
 
     const width = Number(svg.attr('width'));
     const height = Number(svg.attr('height'));
-    const margin = ({ top: 20, right: 0, bottom: 30, left: 40 });
+    const margin = ({ top: 20, right: 0, bottom: 200, left: 40 });
 
     const x = d3.scaleBand()
         .domain(data.map(d => d.name))
@@ -102,6 +103,7 @@ async function makeAirlinesDelaysPlot() {
         "#d95f02", "#e7298a", "#7570b3", "#1b9e77"]);
 
     const xAxis = g => g
+        //.attr('transform', `translate(0,${height - margin.bottom})`)
         .attr('transform', `translate(0,${height - margin.bottom})`)
         .call(d3.axisBottom(x).tickSize(-height, 0, 0));
 
@@ -113,13 +115,23 @@ async function makeAirlinesDelaysPlot() {
     svg.append('g')
         .selectAll('circle')
         .data(data).enter().append('circle')
-        .style('fill', d => itemColor(d.name))
+        //.style('fill', d => itemColor(d.name))
+        .style('fill', d => blueColor)
         .attr('cx', d => x(d.name) + x.bandwidth() / 2)
         .attr('cy', d => y(d.value))
         .attr('r', d => sizeScaler(d.size));
 
-    svg.append('g').call(xAxis);
-    svg.append('g').call(yAxis);
+    svg.append('g').call(xAxis)
+        .selectAll("text")	
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("class", "axis-large-font")
+        .attr("transform", function(d) {
+            return "rotate(-90)" 
+            });
+
+    svg.append('g').call(yAxis).attr("class", "axis");
 }
 
 
@@ -137,7 +149,7 @@ async function makeCancellationPlots() {
     const reasons = data.cancellation_reasons.map((it) => ({ name: names[it.name], value: it.count }));
 
     new PieChart(states, d3.select('#cancellationsPlot')).colors(d3.schemeAccent).draw();
-    new PieChart(reasons, d3.select('#cancellationReasonPlot')).colors(d3.schemeAccent).draw();
+    new PieChart(reasons, d3.select('#cancellationReasonPlot')).colors(d3.schemeSpectral[6]).draw();
 }
 
 

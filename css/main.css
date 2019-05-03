@@ -80,7 +80,16 @@ footer {
 }
 
 .shadowcard:hover {
-	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+	box-shadow: 0 12px 20px 0 rgba(0, 0, 0, 0.2);
 }
 
 .axis { font: 12px sans-serif; }
+.axis-large-font { font: 14px sans-serif; }
+
+.right-divider {
+    border-right: 1px solid #ccc;
+}
+
+.left-divider {
+    border-left: 1px solid #ccc;
+}

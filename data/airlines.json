@@ -1,0 +1,16 @@
+[
+    {"airline_code":"AA","name":"American Airlines"             },
+    {"airline_code":"F9","name":"Frontier Airlines"             },
+    {"airline_code":"WN","name":"Southwest Airlines"            },
+    {"airline_code":"UA","name":"United Airlines"               },
+    {"airline_code":"MQ","name":"American Eagle Airlines"       },
+    {"airline_code":"NK","name":"Spirit Airlines"               },
+    {"airline_code":"DL","name":"Delta Air Lines"               },
+    {"airline_code":"EV","name":"Atlantic Southeast Airlines"   },
+    {"airline_code":"HA","name":"Hawaiian Airlines"             },
+    {"airline_code":"OO","name":"Skywest Airlines"              },
+    {"airline_code":"B6","name":"JetBlue Airways"               },
+    {"airline_code":"VX","name":"Virgin America"                },
+    {"airline_code":"AS","name":"Alaska Airlines"               },
+    {"airline_code":"US","name":"US Airways"                    }
+]
