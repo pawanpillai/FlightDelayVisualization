@@ -245,6 +245,7 @@ class PieChart extends SvgChart {
         const normalLabel = d3.arc()
             .outerRadius(radius - 100)
             .innerRadius(radius - 40);
+
         const smallSectorLabel = d3.arc()
             .outerRadius(radius + 20)
             .innerRadius(radius - 40);
@@ -281,6 +282,7 @@ class PieChart extends SvgChart {
             .attr("transform", d => `translate(${label(d).centroid(d)})`)
             .attr("dx", d => dx(d))
             .text(d => d.data.name);
+            
         arc.append("text")
             .attr("transform", d => `translate(${label(d).centroid(d)})`)
             .attr("dx", d => dx(d))

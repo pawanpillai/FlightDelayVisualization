@@ -7,7 +7,6 @@ function weekDayNameShort(date) {
 }
 
 function round(num, scale) {
-    // noinspection JSCheckFunctionSignatures
     return +(Math.round(num + "e+" + scale) + "e-" + scale);
 }
 

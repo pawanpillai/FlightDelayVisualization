@@ -47,7 +47,6 @@ async function makeAirlinesDelaysPlot() {
         .range([8, 20]);
 
     const xAxis = g => g
-        //.attr('transform', `translate(0,${height - margin.bottom})`)
         .attr('transform', `translate(0,${height - margin.bottom})`)
         .call(d3.axisBottom(x).tickSize(-height, 0, 0));
 
@@ -65,7 +64,6 @@ async function makeAirlinesDelaysPlot() {
     svg.append('g')
         .selectAll('circle')
         .data(data).enter().append('circle')
-        //.style('fill', d => itemColor(d.name))
         .style('fill', d => blueColor)
         .attr('cx', d => x(d.name) + x.bandwidth() / 2)
         .attr('cy', d => y(d.value))
@@ -147,35 +145,11 @@ async function makeDelaysMap() {
         .domain([d3.min(delays, it => it.delay_rate), d3.max(delays, it => it.delay_rate)])
         .range([0.05, 0.9]);
 
-    // const sizeScaler = d3.scaleLinear()
-    //     .domain([0, d3.max(delays, it => it.flights_count)])
-    //     .range([20000, 90000]);
-
     const sizeScaler = d3.scaleLinear()
         .domain([0, d3.max(delays, it => it.delay_rate)])
-        //.domain([d3.min(delays, it => it.delay_rate), d3.max(delays, it => it.delay_rate)])
         .range([0, 1]);
 
     delays.sort((a, b) => b.flights_count - a.flights_count); // smaller circles must be on top to be clickable
-
-    // delays.forEach(it => {
-    //     const airport = airports[it.origin_airport];
-
-    //     const point = [Number(airport.latitude), Number(airport.longitude)];
-
-    //     //console.log(it.delay_rate, sizeScaler(it.delay_rate) * 200000);
-
-    //     const circle = L.circle(point, {
-    //         fillColor: 'red',
-    //         fillOpacity: opacityScaler(0.2),
-    //         radius: sizeScaler(it.delay_rate) * 200000,
-    //         stroke: false
-    //     }).addTo(map);
-
-    //     circle.bindPopup(`${airport.iata_code}
-    //         <p>${airport.airport}, ${airport.city}, ${airport.state}</p>
-    //         <p><b>${round(it.delay_rate * 100, 2)}%</b> delayed (<b>${Math.trunc(it.flights_count * it.delay_rate)}</b> of <b>${it.flights_count}</b> flights)`);
-    // });
 
     let mapMarkers = [];
 
@@ -239,26 +213,6 @@ async function makeDelaysMap() {
 
 }
 
-// function drawMarker(airport, airports){
-//     airport.forEach(it => {
-//         const airport = airports[it.origin_airport];
-
-//         const point = [Number(airport.latitude), Number(airport.longitude)];
-
-//         //console.log(it.delay_rate, sizeScaler(it.delay_rate) * 200000);
-
-//         const circle = L.circle(point, {
-//             fillColor: 'red',
-//             fillOpacity: opacityScaler(0.2),
-//             radius: sizeScaler(it.delay_rate) * 200000,
-//             stroke: false
-//         }).addTo(map);
-
-//         circle.bindPopup(`${airport.iata_code}
-//             <p>${airport.airport}, ${airport.city}, ${airport.state}</p>
-//             <p><b>${round(it.delay_rate * 100, 2)}%</b> delayed (<b>${Math.trunc(it.flights_count * it.delay_rate)}</b> of <b>${it.flights_count}</b> flights)`);
-//     });
-// }
 
 function init() {
 

@@ -11,7 +11,7 @@ async function checkFileAccess() {
         container.insertAdjacentElement('afterbegin', htmlToElement(`
     <div style="color: red; font-size: 20px; margin: 40px 0;">
         <p>Failed to access data files. Are you trying to open this page as a local HTML file?</p>
-        <p>Use a web server (such as <code class="code">npm install -g http-server</code> and run <code class="code">http-server</code>)</p>
+        <p>Use a web server (such as <code class="code">npm install -g http-server</code> and run <code class="code">http-server</code> in terminal under your project root folder.)</p>
     </div>`));
     };
     try {
